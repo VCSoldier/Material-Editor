@@ -31,13 +31,16 @@ function materials:Set(ent, texture, data)
 			NoiseOffsetY = data.NoiseOffsetY or 0,
 		};
 
-		if (texture == nil or texture == "") then
-			if (IsValid(ent)) then
-				ent:SetMaterial("");
-			end;
 
-			return;
-		end;
+if (texture == nil or texture == "") then
+	if (IsValid(ent)) then
+		ent:SetMaterial("");
+		ent.MaterialData = nil; -- clear the table so it doesn't get reapplied
+		duplicator.ClearEntityModifier(ent, "MaterialData"); -- clear modifier
+	end;
+
+	return;
+end;
 
 		texture = texture:lower();
 		texture = string.Trim(texture);
